@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CDO Foodsphere — Sales Operations KPI Dashboard</title>
+<meta name="description" content="Executive KPI dashboard for CDO Foodsphere Sales Operations: sellout performance, unique buying accounts, MCL compliance and promo product distribution.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<!-- ───────────────────────── Company header ───────────────────────── -->
+<header class="masthead" id="masthead">
+  <div class="shell masthead__inner">
+    <div class="brand">
+      <div class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" role="presentation">
+          <path class="swoosh swoosh--1" d="M4 34c10-16 26-22 40-20"/>
+          <path class="swoosh swoosh--2" d="M4 41c11-17 27-23 40-21"/>
+          <circle class="dot" cx="36" cy="15" r="5"/>
+        </svg>
+      </div>
+      <div class="brand__text">
+        <span class="brand__name">CDO&nbsp;Foodsphere</span>
+        <span class="brand__sub">Sales Operations</span>
+      </div>
+    </div>
+
+    <nav class="masthead__nav" aria-label="Dashboard sections">
+      <a href="#summary">Summary</a>
+      <a href="#kpi1">Sellout</a>
+      <a href="#kpi2">UBA</a>
+      <a href="#kpi3">MCL</a>
+      <a href="#kpi4">Promo</a>
+    </nav>
+
+    <div class="masthead__tools">
+      <button class="icon-btn" id="btnTheme" type="button" title="Toggle light / dark mode" aria-label="Toggle light or dark mode">
+        <span class="icon-btn__sun" aria-hidden="true">☀</span>
+        <span class="icon-btn__moon" aria-hidden="true">☾</span>
+      </button>
+      <button class="icon-btn" id="btnPrint" type="button" title="Print dashboard" aria-label="Print dashboard">⎙</button>
+      <button class="btn btn--ghost" id="btnRefresh" type="button">
+        <span class="btn__spin" aria-hidden="true"></span><span>Refresh</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ───────────────────────── Title band ───────────────────────── -->
+<section class="titleband">
+  <div class="shell titleband__inner">
+    <div>
+      <p class="titleband__eyebrow">Executive KPI Monitoring</p>
+      <h1 class="titleband__title">Sales Operations Performance Dashboard</h1>
+      <p class="titleband__note">Sellout attainment, account coverage, must-carry compliance and promotional distribution — live from the CDO&nbsp;KPI&nbsp;Monitoring workbook.</p>
+    </div>
+    <div class="refreshcard" id="refreshCard">
+      <span class="refreshcard__label">Last refresh</span>
+      <strong class="refreshcard__time" id="lastRefresh">Loading…</strong>
+      <span class="refreshcard__meta" id="refreshMeta">Connecting to data source…</span>
+    </div>
+  </div>
+</section>
+
+<main class="shell" id="main">
+
+  <!-- Notices (data-quality flags raised by the engine) -->
+  <div id="notices" class="notices" hidden></div>
+
+  <!-- ───────────────────────── Global filters ───────────────────────── -->
+  <section class="panel panel--filters" id="filters" aria-label="Global dashboard filters">
+    <div class="panel__head">
+      <h2 class="panel__title">Global Filters</h2>
+      <div class="panel__actions">
+        <span class="rowcount" id="rowCount"></span>
+        <button class="btn btn--sm btn--ghost" id="btnResetAll" type="button">Reset all filters</button>
+      </div>
+    </div>
+    <div class="filterbar" id="filterBar">
+      <div class="skeleton skeleton--filters"></div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── KPI summary cards ───────────────────────── -->
+  <section id="summary" class="section">
+    <h2 class="section__title">Dashboard Summary</h2>
+    <div class="cards" id="summaryCards">
+      <div class="skeleton skeleton--cards"></div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── KPI 1 — Sellout ───────────────────────── -->
+  <section id="kpi1" class="section">
+    <div class="section__head">
+      <div>
+        <p class="section__kicker">KPI 1</p>
+        <h2 class="section__title">Sellout Performance</h2>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span class="legend__item"><i class="sw sw--target"></i>Target</span>
+        <span class="legend__item"><i class="sw sw--actual"></i>Actual</span>
+        <span class="legend__item"><i class="sw sw--balance"></i>Balance</span>
+      </div>
+    </div>
+    <div class="stack" id="kpi1Host"></div>
+  </section>
+
+  <!-- ───────────────────────── KPI 2 — UBA ───────────────────────── -->
+  <section id="kpi2" class="section">
+    <div class="section__head">
+      <div>
+        <p class="section__kicker">KPI 2</p>
+        <h2 class="section__title">Unique Buying Accounts</h2>
+      </div>
+      <p class="section__def">Distinct customer accounts with consolidated positive sales in the selected period. Each account counts once, however many invoices it has.</p>
+    </div>
+    <div class="stack" id="kpi2Host"></div>
+  </section>
+
+  <!-- ───────────────────────── KPI 3 — MCL ───────────────────────── -->
+  <section id="kpi3" class="section">
+    <div class="section__head">
+      <div>
+        <p class="section__kicker">KPI 3</p>
+        <h2 class="section__title">Must Carry List Compliance</h2>
+      </div>
+      <p class="section__def">An account is compliant when it purchases at least <strong>85%</strong> of the MCL products required for its Product Class and Channel.</p>
+    </div>
+    <div class="stack" id="kpi3Host"></div>
+  </section>
+
+  <!-- ───────────────────────── KPI 4 — Promo ───────────────────────── -->
+  <section id="kpi4" class="section">
+    <div class="section__head">
+      <div>
+        <p class="section__kicker">KPI 4</p>
+        <h2 class="section__title">Promo Product Distribution</h2>
+      </div>
+      <p class="section__def">An account is compliant when it purchases at least <strong>85%</strong> of the promotional products required for its Product Class and Channel.</p>
+    </div>
+    <div class="stack" id="kpi4Host"></div>
+  </section>
+
+</main>
+
+<!-- ───────────────────────── Footer ───────────────────────── -->
+<footer class="footer">
+  <div class="footer__swoosh" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0 60C260 12 700 0 1440 26V80H0Z"/></svg>
+  </div>
+  <div class="shell footer__inner">
+    <div>
+      <strong class="footer__name">CDO Foodsphere — Sales Operations</strong>
+      <p class="footer__meta" id="footerMeta">Data source: CDO KPI Monitoring (published Google Sheet)</p>
+    </div>
+    <p class="footer__legal">Executive KPI dashboard · Figures recalculate from the live workbook and reflect the filters applied above.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/kpi.js"></script>
+<script src="assets/js/ui.js"></script>
+</body>
+</html>
